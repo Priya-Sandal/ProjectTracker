@@ -13,9 +13,17 @@ const routes = [
     },
     {
         name: 'AddProjects',
-        path: '/AddProjects',
-        component: AddProjects
+        path: '/edit-project/:id',
+        component: AddProjects,
+    },
+    {
+        path: '/addprojects',
+        component: AddProjects,
+        props:true,
     }
+
+
+    
 ];
 
 const router = createRouter({
