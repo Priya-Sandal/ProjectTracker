@@ -5,8 +5,8 @@
         <h1><label for="project-details">Details</label></h1>
         <textarea name="" id="project-details" cols="100" rows="10" v-model="details"></textarea>
         <br><br>
-        <button @click="AddProject" class="btn" v-if="!this.id" :disables="tittle.length === 0 ||detail.length === 0">AddProjects</button>
-        <!-- <button @click="updateprojects" class="btn">updateprojects</button> -->
+        <button @click="AddProjects" class="btn" >AddProjects</button>
+         <!-- <button @click="updateprojects" class="btn" v-if="!this.id" :disabled="tittle.length===0||detail.length===0">updateprojects</button> -->
         <!-- <h1>{{tittle}}</h1>  -->
 
     </div>
@@ -27,20 +27,20 @@ export default {
 
     },
     methods: {
-        AddProject() {
+        AddProjects() {
             this.projects.push({
                 'tittle': this.tittle,
-                'detail': this.detail,
-                completed: false,
+                'details': this.details,
+            
             })
             localStorage.setItem("projects", JSON.stringify(this.projects));
             this.tittle = "";
-            this.detail = "";
+            this.details = "";
             this.$router.push({ path: '/' })
         },
-       
+
     },
-  
+
 }
 
 </script>
@@ -67,6 +67,7 @@ input {
     color: #555;
 }
 
+
 .btn {
     background-color: green;
     color: white;
@@ -75,11 +76,5 @@ input {
     border: none;
     font-size: 1em;
     cursor: pointer;
-}
-
-
-
-#id {
-    background-color: red;
 }
 </style>
