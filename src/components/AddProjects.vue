@@ -1,12 +1,16 @@
 <template>
-    <div id="addprojects">
+    <div id="add-project">
+        <div class="field">
         <h1><label for="project-title">Tittle</label></h1>
-        <input type="text" id="project" v-model="tittle">
+        <input type="text" id="project-title" v-model="tittle">
+        </div>
+        <div class="field">
         <h1><label for="project-details">Details</label></h1>
         <textarea name="" id="project-details" cols="100" rows="10" v-model="details"></textarea>
+        </div>
         <br><br>
-        <button @click="AddProjects" class="btn" >AddProjects</button>
-         <!-- <button @click="updateprojects" class="btn" v-if="!this.id" :disabled="tittle.length===0||detail.length===0">updateprojects</button> -->
+        <button @click="AddProjects" class="btn">AddProjects</button>
+        <!-- <button @click="updateprojects" class="btn" v-if="!this.id" :disabled="tittle.length===0||detail.length===0">updateprojects</button> -->
         <!-- <h1>{{tittle}}</h1>  -->
 
     </div>
@@ -15,7 +19,7 @@
 export default {
     name: 'AddProjects',
     props: {
-        id: String
+        id: String,
     },
 
     data() {
@@ -27,12 +31,16 @@ export default {
 
     },
     methods: {
-        AddProjects() {
+       
+ AddProjects() {
+    console.log(this.projects)
             this.projects.push({
                 'tittle': this.tittle,
                 'details': this.details,
-            
+        
+
             })
+            
             localStorage.setItem("projects", JSON.stringify(this.projects));
             this.tittle = "";
             this.details = "";
@@ -40,8 +48,16 @@ export default {
         },
 
     },
+    created() {
+        this.projects = JSON.parse(localStorage.getItem('projects' || "[]"));
+        // if(this.id){
+        //     this.tittle = this.projects[this.id].tittle;
+        //     this.details = this.projects[this.id].details;
 
+    }
 }
+
+
 
 </script>
 <style>

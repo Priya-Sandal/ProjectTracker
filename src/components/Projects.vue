@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>{{}}</h1>
+    
     </div>
     <div class="filter-nav">
         <button class="filter" :class="{active:activebtn ==='btn1'}"
@@ -21,12 +22,20 @@
         </router-link>
     </div>
     <ul>
-        <li v-for="(element,index) in filteredProjects" v-bind:key="index" class="project-box"
+        <li v-for="(element,index) in projects" v-bind:key="index" class="project-box"
             @click.prevent.self="showdetails(index)"
             :class="{'green-border-left':element.completed,'red-border-left' :!element.completed}">
+
             <span class="project-title">{{element.tittle}}</span>
+
             <span class="icons">
+
                 <i class="fa-solid fa-trash" :key="index" :id="index" @click="deletedProject(index)"></i>
+                 <i class="fa fa-trash" aria-hidden="true"></i> 
+                <router-link :to="{name:'AddProjects',params: {id:index}}"><i class="fa-solid fa-pencil"></i>
+                </router-link>
+                <i class="fa-solid fa-check greenHover" @click="completedprojects(index)"
+                    :class="{'green-color':element.completed}"></i>
             </span>
             <p class="project-detail" :key="index" v-if="showdetailedIndex === index"></p>
         </li>
@@ -39,16 +48,36 @@ export default {
     data() {
         return {
             // filterBysetvalue:true,
-            showdetailedIndex: null,
-            filterBy: 'all',
-            activebtn: 'btn1'
+            showdetailedIndex: 'null',
+            filterBy: 'viewall',
+            activebtn: 'btn1',
+            projects: [],
         }
     },
     methods: {
-        filterBysetvalue(value){
+        filterBysetvalue(value) {
             this.filterBy = value;
-        },
+            localStorage.setItem("projects", JSON.stringify(this.projects));
+        }
     },
+    // deletedelement(index){
+    //    this.deletedProjectSelected = false
+    //    this.deletedProjectTittle = this.projects[index].tittle
+    // },
+    completedprojects(index) {
+        if (this.projects[index].completed === false) {
+            this.projects[index].completed = true;
+        }
+        else {
+            this.projects[index].completed = false;
+        }
+        localStorage.setItem("projects", JSON.stringify(this.projects));
+    },
+
+
+    created() {
+        this.projects = JSON.parse(localStorage.getItem('projects' || "[]"));
+    }
 
 };
 </script>
@@ -73,6 +102,11 @@ export default {
 
 .projectbox {
     color: red;
+    
+    background-color: #fff;
+    padding: 24px 30px;
+    margin: 10px 50px;
 
 }
+
 </style>
